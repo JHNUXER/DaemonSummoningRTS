@@ -224,8 +224,8 @@ class Zombie extends GameObject {
       targ = poss_targs[0] ;
       if (!targ) {
         let ang = Math.random() * Math.PI * 2 ;
-        let cos = Math.cos(ang) * 100 ;
-        let sin = Math.sin(ang) * 100 ;
+        let cos = Math.cos(ang) * this._speed ;
+        let sin = Math.sin(ang) * this._speed ;
         this.x += t * cos ;
         this.y += t * sin ;
       }
