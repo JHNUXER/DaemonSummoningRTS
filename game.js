@@ -219,7 +219,7 @@ class Ent extends Creature {
     this.y -= Math.cos(angle) * dist ;
   }
   onUpdate(t) {
-    this.moveAngular(Math.random() * Math.TAU, this._speed) ;
+    this.moveAngular(Math.random() * Math.TAU, this._speed * t) ;
   }
   
 }
