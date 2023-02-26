@@ -2,14 +2,6 @@ if (!Math.TAU) {
   Object.defineProperty(Math, "TAU", { value: Math.PI * 2, writable: false });
 }
 
-let todo_list = [
-  "damage system",
-  "attack system",
-  "retaliation",
-  "more complex unit AI",
-  "ECS"
-];
-
 const GLOB = this ;
 
 function randomAngleVector(start_x, start_y, min_angle, max_angle, min_dist, max_dist) {
