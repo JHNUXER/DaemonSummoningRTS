@@ -205,6 +205,7 @@ class Ent extends Creature {
   constructor(x, y, z) {
     super(x, y, z, 450) ;
     
+    this._move_dir = Math.random() * Math.TAU ;
     this.color  = "#FC0" ;
     this._speed = 100    ;
   }
@@ -219,7 +220,23 @@ class Ent extends Creature {
     this.y -= Math.cos(angle) * dist ;
   }
   onUpdate(t) {
-    this.moveAngular(Math.random() * Math.TAU, this._speed * t) ;
+    this.moveAngular(this._move_dir, this._speed * t) ;
+    this._move_dir += (Math.random() * Math.PI * 0.5) - Math.PI * 0.25 ;
+    let { x, y } = this ;
+    const rr = 10 ** 2 ;
+    for (let ent of this._level._objects) {
+      let dx = x - ent.x ;
+      let dy = y - ent.y ;
+      
+      if (!(ent instanceof Ent) && dx * dx + dy * dy <= rr) {
+        if (ent instanceof Creature) {
+          ent._health -= (Math.floor(Math.random() * 3) + 1) * t ;
+          if (ent._health <= 0) {
+            ent.markForDeletion() ;
+          }
+        }
+      }
+    }
   }
   
 }
