@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daemon Summoning RTS</title>
+  <style>
+    body {
+      position: absolute ;
+      margin:   0px      ;
+      padding:  0px      ;
+      top:      0px      ;
+      left:     0px      ;
+      width:    100vw    ;
+      height:   100vh    ;
+      overflow: hidden   ;
+    }
+    #offscreen_media {
+      position: absolute ;
+      top:      200vw    ;
+      left:     200vw    ;
+    }
+    #debug-ui {
+      z-index: 999999;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="offscreen_media">
+    <!--  -->
+  </div>
+  <canvas id="game_canvas"></canvas>
+  <div id="debug-ui">
+    <button id="stop_game_btn">SUSPEND</button> 
+    <button id="step_game_btn">STEP</button>
+    <span id="object_counter">0 Objects</span>
+  </div>
+  <script>
+    let handleResize = function() {
+      game_canvas.width  = document.body.clientWidth  ;
+      game_canvas.height = document.body.clientHeight ;
+    };
+    window.addEventListener('resize', event=>handleResize());
+    handleResize() ;
+  </script>
+  <script src="Vec3.js"></script>
+  <script src="Timing.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
