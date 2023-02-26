@@ -114,10 +114,10 @@ class Building extends GameObject {
   }
   
 }
-class Daemon extends GameObject {
+class Daemon extends Creature {
   
   constructor(x, y, z) {
-    super(x, y, z) ;
+    super(x, y, z, 250) ;
     
     this.color = "#F00" ;
   }
@@ -186,7 +186,21 @@ class Circle {
   
 }
 
-class Zombie extends GameObject {
+class Creature extends GameObject {
+  
+  constructor(x, y, z, max_health) {
+    super(x, y, z) ;
+    
+    this._max_health = max_health || 100 ;
+  }
+  
+  loadData(data) {
+    this._health = data.health || this._max_health ;
+  }
+  
+}
+
+class Zombie extends Creature {
   
   constructor(x, y, z) {
     super(x, y, z) ;
