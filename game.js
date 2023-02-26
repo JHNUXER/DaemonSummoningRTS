@@ -200,6 +200,30 @@ class Creature extends GameObject {
   
 }
 
+class Ent extends Creature {
+  
+  constructor(x, y, z) {
+    super(x, y, z, 450) ;
+    
+    this.color  = "#FC0" ;
+    this._speed = 100    ;
+  }
+  
+  move(dx, dy, dz) {
+    this.x += dx || 0 ;
+    this.y += dy || 0 ;
+    this.z += dz || 0 ;
+  }
+  moveAngular(angle, dist) {
+    this.x += Math.sin(angle) * dist ;
+    this.y -= Math.cos(angle) * dist ;
+  }
+  onUpdate(t) {
+    this.moveAngular(Math.random() * Math.TAU, this._speed) ;
+  }
+  
+}
+
 class Zombie extends Creature {
   
   constructor(x, y, z) {
