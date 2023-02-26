@@ -207,6 +207,7 @@ class Ent extends Creature {
     
     this._move_dir = Math.random() * Math.TAU ;
     this.color  = "#FC0" ;
+    this._life  = 30     ;
     this._speed = 100    ;
   }
   
@@ -220,6 +221,11 @@ class Ent extends Creature {
     this.y -= Math.cos(angle) * dist ;
   }
   onUpdate(t) {
+    if ((this._life -= t) <= 0) {
+      this.markForDeletion() ;
+      return ;
+    }
+    
     this.moveAngular(this._move_dir, this._speed * t) ;
     this._move_dir += (Math.random() * Math.PI * 0.5) - Math.PI * 0.25 ;
     let { x, y } = this ;
