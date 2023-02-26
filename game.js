@@ -52,6 +52,19 @@ class GameObject {
   static exists(obj) { return obj instanceof GameObject && obj.is_real; }
   
 }
+class Creature extends GameObject {
+  
+  constructor(x, y, z, max_health) {
+    super(x, y, z) ;
+    
+    this._max_health = max_health || 100 ;
+  }
+  
+  loadData(data) {
+    this._health = data.health || this._max_health ;
+  }
+  
+}
 
 function spawnClusterHoriz(level, factory, cx, cy, radius, count) {
   if (factory.prototype instanceof GameObject) {
@@ -186,19 +199,6 @@ class Circle {
   
 }
 
-class Creature extends GameObject {
-  
-  constructor(x, y, z, max_health) {
-    super(x, y, z) ;
-    
-    this._max_health = max_health || 100 ;
-  }
-  
-  loadData(data) {
-    this._health = data.health || this._max_health ;
-  }
-  
-}
 
 class Ent extends Creature {
   
@@ -494,7 +494,7 @@ class Game {
     this._last_tick        = Timing.now() - this._update_delay   ;
     
     let game = this ;
-    let fact = multiFactory(Daemon, Zombie, Zombie, Zombie) ;
+    let fact = multiFactory(Daemon, Zombie, Zombie, Zombie, Ent) ;
     let fact2 = clusterSpawner(game._level, fact, 1, 6, 20, 100) ;
     
     this._level.addObject(new SpawnerTower(0,0,0, fact2));
