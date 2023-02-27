@@ -30,6 +30,7 @@ class GameObject {
   get z() { return this._pos.z; }
   set z(v) { this._pos.z = v; }
   get is_real() { return !this._is_marked; }
+  get position() { return new Vec3(this.x, this.y, this.z); }
   
   constructor(x, y, z) {
     this._pos = new Vec3(x || 0, y || 0, z || 0) ;
@@ -372,6 +373,28 @@ class Level {
     this._to_delete_ndx = 0 ;
   }
   
+  queryRadius2(x, y, radius) {
+    const rr  = radius * radius ;
+    const res = [             ] ;
+    
+    for (let ent of this._objects) {
+      if (ent.position.distanceSquared(x, y, ent.position.z) <= rr)
+        res.push(ent) ;
+    }
+    
+    return res ;
+  }
+  queryRadius3(x, y, z, radius) {
+    const rr  = radius * radius ;
+    const res = [             ] ;
+    
+    for (let ent of this._objects) {
+      if (ent.position.distanceSquared(x, y, z) <= rr)
+        res.push(ent) ;
+    }
+    
+    return res ;
+  }
   spawnObject(factory, x, y, z, data) {
     data = data || { } ;
     
