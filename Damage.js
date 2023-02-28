@@ -14,6 +14,7 @@ GLOB.DamageType = (function() {
   let i = 0;
   for (let type_name of types) {
     let t = Object.defineProperties({}, {
+      __DAMAGE_TYPE: { value: true, writable: false },
       name: {
         value: type_name,
         writable: false,
@@ -26,3 +27,15 @@ GLOB.DamageType = (function() {
   }
   return obj ;
 });
+
+GLOB.Damage = class Damage {
+  
+  get type() { return this._type; }
+  get value() { return this._value; }
+  
+  constructor(type, value) {
+    this._type  = (type.__DAMAGE_TYPE) ? type : DamageType[type] ;
+    this._value = value                                          ;
+  }
+  
+};
