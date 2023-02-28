@@ -2,7 +2,7 @@ if (!Math.TAU) {
   Object.defineProperty(Math, "TAU", { value: Math.PI * 2, writable: false });
 }
 
-const GLOB = this ;
+
 
 function randomAngleVector(start_x, start_y, min_angle, max_angle, min_dist, max_dist) {
   start_x   = start_x   || 0        ;
