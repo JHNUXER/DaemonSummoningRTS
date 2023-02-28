@@ -2,8 +2,6 @@ if (!Math.TAU) {
   Object.defineProperty(Math, "TAU", { value: Math.PI * 2, writable: false });
 }
 
-
-
 function randomAngleVector(start_x, start_y, min_angle, max_angle, min_dist, max_dist) {
   start_x   = start_x   || 0        ;
   start_y   = start_y   || 0        ;
