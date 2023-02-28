@@ -1,17 +1,35 @@
 class Collider2D {
   
+  get _cx() { return this._cx || 0; }
+  set _cx(v) { this._cx = v; }
+  get cy() { return this._cy || 0; }
+  set cy(v) { this._cy = v; }
+  
   overlaps(other) { return false; }
   contains(x, y) { return false; }
   
 }
+class NullCollider2D extends Collider2D { constructor() { } }
 class AABB2 extends Collider2D {
   
   get ax() { return this.a.x; }
   get ay() { return this.a.y; }
   get bx() { return this.b.x; }
   get by() { return this.b.y; }
-  get cx() { return (this.b.x - this.a.x) * 0.5 + this.a.x; }
+  get _cx() { return (this.b.x - this.a.x) * 0.5 + this.a.x; }
+  get width() { return this.bx - this.ax; }
+  get height() { return this.by - this.ay; }
+  set _cx(v) {
+    let hw = this.width * 0.5 ;
+    this.a.x = v - hw ;
+    this.b.x = v + hw ;
+  }
   get cy() { return (this.b.y - this.a.y) * 0.5 + this.a.y; }
+  set cy(v) {
+    let hh = this.height * 0.5 ;
+    this.a.y = v - hh ;
+    this.b.y = v + hh ;
+  }
   
   constructor(ax, ay, bx, by) {
     this.a = new Vec3(ax, ay, 0) ;
@@ -29,8 +47,8 @@ class AABB2 extends Collider2D {
       return !(this.ax  > other.bx || this.ay  > other.by
         ||     other.ax > this.bx  || other.ay > this.by) ;
     } else if (other instanceof Circle) {
-      let cx = other.x      ;
-      let cy = other.y      ;
+      let cx = other._cx      ;
+      let cy = other._cy      ;
       let cr = other.radius ;
       let rr = cr * cr      ;
       
@@ -42,9 +60,12 @@ class AABB2 extends Collider2D {
 }
 class Circle extends Collider2D {
   
+  get cx() { return this._cx; }
+  get cy() { return this._cy; }
+  
   constructor(x, y, r) {
-    this.x      = x ;
-    this.y      = y ;
+    this._cx    = x ;
+    this._cy    = y ;
     this.radius = r ;
   }
   
@@ -52,8 +73,8 @@ class Circle extends Collider2D {
     if (x instanceof Vec3)
       ({ x, y } = x) ;
     
-    let dx = x - this.x      ;
-    let dy = y - this.y      ;
+    let dx = x - this._cx    ;
+    let dy = y - this._cy    ;
     let rr = this.r * this.r ;
     
     return dx * dx + dy * dy <= rr ;
@@ -62,8 +83,8 @@ class Circle extends Collider2D {
     if (other instanceof Circle) {
       let rs = this.radius + other.radius ;
       let rs2 = rs * rs ;
-      let dx  = this.x - other.x ;
-      let dy  = this.y - other.y ;
+      let dx  = this._cx - other._cx ;
+      let dy  = this._cy - other._cy ;
       
       return dx * dx + dy * dy <= rs2 ;
     } else if (other instanceof AABB2) {

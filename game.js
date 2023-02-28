@@ -131,7 +131,8 @@ class Daemon extends Creature {
   constructor(x, y, z) {
     super(x, y, z, 250) ;
     
-    this.color = "#F00" ;
+    this.color = "#F00"                          ;
+    this.hull  = new Circle(this.x, this.y, 3.5) ;
   }
   
   onUpdate(t) {
@@ -140,6 +141,9 @@ class Daemon extends Creature {
     let sin = Math.sin(ang) * 100 ;
     this.x += t * cos ;
     this.y += t * sin ;
+    
+    this.hull._cx = this.x ;
+    this.hull.cy = this.y ;
   }
   
 }
