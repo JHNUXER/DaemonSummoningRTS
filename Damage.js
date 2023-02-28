@@ -24,4 +24,5 @@ GLOB.DamageType = (function() {
     Object.defineProperty(obj, type_name, { value: t, writable: false }) ;
     Object.defineProperty(i-1, type_name, { value: t, writable: false }) ;
   }
+  return obj ;
 });
