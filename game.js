@@ -142,7 +142,7 @@ class Daemon extends Creature {
     this.x += t * cos ;
     this.y += t * sin ;
     
-    this.hull._cx = this.x ;
+    this.hull.cx = this.x ;
     this.hull.cy = this.y ;
   }
   

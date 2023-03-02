@@ -1,7 +1,7 @@
 class Collider2D {
   
-  get _cx() { return this._cx || 0; }
-  set _cx(v) { this._cx = v; }
+  get cx() { return this._cx || 0; }
+  set cx(v) { this._cx = v; }
   get cy() { return this._cy || 0; }
   set cy(v) { this._cy = v; }
   
@@ -16,10 +16,10 @@ class AABB2 extends Collider2D {
   get ay() { return this.a.y; }
   get bx() { return this.b.x; }
   get by() { return this.b.y; }
-  get _cx() { return (this.b.x - this.a.x) * 0.5 + this.a.x; }
+  get cx() { return (this.b.x - this.a.x) * 0.5 + this.a.x; }
   get width() { return this.bx - this.ax; }
   get height() { return this.by - this.ay; }
-  set _cx(v) {
+  set cx(v) {
     let hw = this.width * 0.5 ;
     this.a.x = v - hw ;
     this.b.x = v + hw ;
@@ -32,6 +32,8 @@ class AABB2 extends Collider2D {
   }
   
   constructor(ax, ay, bx, by) {
+    super() ;
+    
     this.a = new Vec3(ax, ay, 0) ;
     this.b = new Vec3(bx, by, 0) ;
   }
@@ -61,9 +63,13 @@ class AABB2 extends Collider2D {
 class Circle extends Collider2D {
   
   get cx() { return this._cx; }
+  set cx(v) { this._cx = v; }
   get cy() { return this._cy; }
+  set cy(v) { this._cy = v; }
   
   constructor(x, y, r) {
+    super() ;
+    
     this._cx    = x ;
     this._cy    = y ;
     this.radius = r ;
