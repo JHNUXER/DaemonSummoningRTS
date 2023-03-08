@@ -419,6 +419,7 @@ class Camera {
 }
 
 const camera = new Camera() ;
+const IDENTITY = new DOMMatrix() ;
 
 class Renderer {
   
@@ -433,14 +434,16 @@ class Renderer {
     const camera = this._camera            ;
     const canvas = this._canvas            ;
     const g      = canvas.getContext("2d") ;
-    const w      = camera.resolutionWidth  ;
-    const h      = camera.resolutionHeight ;
+    const w      = camera.resolution_width  ;
+    const h      = camera.resolution_height ;
     const hw     = w / 2                   ;
     const hh     = h / 2                   ;
     const cx     = camera.x                ;
     const cy     = camera.y                ;
-    const tx = w / 2 - cx + 0.5 ;
-    const ty = h / 2 - cy + 0.5 ;
+    const tx = hw /*+ cx + 0.5 ;*/
+    const ty = hh /*+ cy + 0.5 ;*/
+    
+    g.setTransform(IDENTITY) ;
     
     g.fillStyle = "#808080" ;
     g.fillRect(0, 0, w, h)  ;
@@ -464,8 +467,6 @@ class Renderer {
         g.stroke() ;
         g.closePath() ;
       }
-      
-      g.translate(-tx, -ty)   ;
     }
   }
   
@@ -496,17 +497,19 @@ class Game {
   get is_running() { return this._is_running; }
   
   constructor(canvas) {
-    this._canvas           = canvas                       ;
-    this._level            = new Level()                  ;
-    this._renderer         = new Renderer(this._canvas)   ;
-    this._renderer._level  = this._level ;
-    this._is_running       = false                        ;
-    this._target_framerate = 60                           ;
-    this._target_tickrate  = 20                           ;
-    this._frame_delay      = 1.0 / this._target_framerate ;
-    this._update_delay     = 1.0 / this._target_tickrate  ;
-    this._last_frame       = Timing.now() - this._frame_delay    ;
-    this._last_tick        = Timing.now() - this._update_delay   ;
+    this._mouse            = new Mouse(canvas)                 ;
+    this._canvas           = canvas                            ;
+    this._level            = new Level()                       ;
+    this._renderer         = new Renderer(this._canvas)        ;
+    this._renderer._level  = this._level                       ;
+    this._renderer._mouse  = this._mouse                       ;
+    this._is_running       = false                             ;
+    this._target_framerate = 60                                ;
+    this._target_tickrate  = 20                                ;
+    this._frame_delay      = 1.0 / this._target_framerate      ;
+    this._update_delay     = 1.0 / this._target_tickrate       ;
+    this._last_frame       = Timing.now() - this._frame_delay  ;
+    this._last_tick        = Timing.now() - this._update_delay ;
     
     let game = this ;
     let fact = multiFactory(Daemon, Zombie, Zombie, Zombie, Ent) ;
