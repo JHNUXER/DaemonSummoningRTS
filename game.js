@@ -278,6 +278,21 @@ class Zombie extends Creature {
   
 }
 
+class SummoningTemple extends Building {
+  
+  constructor(x, y, z) {
+    super(x - 12.5, y - 12.5, z, 25, 25) ;
+    this._collider = new AABB2(this.x, this.y, this.x + this.width, this.y + this.height) ;
+  }
+  
+  onUpdate(t) {
+    super.onUpdate(t) ;
+    
+    // TODO: Add production-queue.
+  }
+  
+}
+
 class SpawnerTower extends Building {
   
   constructor(x, y, z, factory) {
