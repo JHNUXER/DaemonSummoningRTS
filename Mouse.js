@@ -23,10 +23,10 @@ class Mouse {
     let px = event.offsetX ;
     let py = event.offsetY ;
     
+    let mx = px - this._x ;
+    let my = py - this._y ;
+    
     if ((event.buttons & 1) === 1) {
-      let mx = px - this._x ;
-      let my = py - this._y ;
-      
       // TODO: Add dragging functionality
     }
     
