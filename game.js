@@ -403,22 +403,44 @@ function getCookie(name) {
   return "" ;
 }
 
+class Camera {
+  
+  get x() { return this._pos.x; }
+  get y() { return this._pos.y; }
+  get z() { return this._pos.z; }
+  get resolution_width() { return this._res.width; }
+  get resolution_height() { return this._res.height; }
+  
+  constructor() {
+    this._pos = new Vec3() ;
+    this._res = { get width() { return game_canvas.width; }, get height() { return game_canvas.height; } };
+  }
+  
+}
+
+const camera = new Camera() ;
+
 class Renderer {
   
   constructor(canvas) {
     this._canvas = canvas         ;
-    this._camera = null           ;
+    this._camera = camera         ;
     this._mouse  = { x: 0, y: 0 } ;
     this._level  = null           ;
   }
   
   render(time) {
+    const camera = this._camera            ;
     const canvas = this._canvas            ;
     const g      = canvas.getContext("2d") ;
-    const w      = canvas.width            ;
-    const h      = canvas.height           ;
-    const tx = w / 2 ;
-    const ty = h / 2 ;
+    const w      = camera.resolutionWidth  ;
+    const h      = camera.resolutionHeight ;
+    const hw     = w / 2                   ;
+    const hh     = h / 2                   ;
+    const cx     = camera.x                ;
+    const cy     = camera.y                ;
+    const tx = w / 2 - cx + 0.5 ;
+    const ty = h / 2 - cy + 0.5 ;
     
     g.fillStyle = "#808080" ;
     g.fillRect(0, 0, w, h)  ;
